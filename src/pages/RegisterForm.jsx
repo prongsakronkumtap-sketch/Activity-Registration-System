@@ -1,6 +1,7 @@
-// src/pages/RegisterForm.jsx
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import { getActivityById } from "../services/api";
+import StatusMessage from "../components/StatusMessage";
 import { getActivityById } from "../services/api";
 import StatusMessage from "../components/StatusMessage";
 
@@ -37,7 +38,6 @@ function RegisterForm() {
       return;
     }
 
-    // บันทึกสำเร็จ
     setStatus({ type: "success", message: "ลงทะเบียนเข้าร่วมกิจกรรมสำเร็จแล้ว!" });
     setTimeout(() => {
       navigate("/activities");
@@ -46,51 +46,76 @@ function RegisterForm() {
 
   if (loading) return <StatusMessage type="loading" message="กำลังโหลดข้อมูล..." />;
 
+  const inputStyle = {
+    width: "100%",
+    padding: "10px",
+    borderRadius: "8px",
+    border: "1px solid #ccc",
+    boxSizing: "border-box",
+    background: "#fff",
+    color: "#202124",
+  };
+
+  const labelStyle = {
+    display: "block",
+    fontWeight: "bold",
+    marginBottom: "6px",
+    color: "#202124",
+  };
+
   return (
-    <div style={{ maxWidth: "600px", margin: "20px auto", padding: "24px", background: "#fff", borderRadius: "12px", border: "1px solid #e0e0e0" }}>
-      <h2>ลงทะเบียน: {activity?.title}</h2>
-      
+    <div
+      style={{
+        maxWidth: "600px",
+        margin: "20px auto",
+        padding: "24px",
+        background: "#fff",
+        color: "#202124",
+        textAlign: "left",
+        borderRadius: "12px",
+        border: "1px solid #e0e0e0",
+      }}
+    >
+      <h2 style={{ color: "#202124", marginTop: 0 }}>
+        ลงทะเบียน: {activity?.title}
+      </h2>
+
       {status.message && <StatusMessage type={status.type} message={status.message} />}
 
       <form onSubmit={handleSubmit} style={{ display: "grid", gap: "16px", marginTop: "16px" }}>
         <div>
-          <label style={{ display: "block", fontWeight: "bold", marginBottom: "6px" }}>รหัสนักศึกษา *</label>
+          <label style={labelStyle}>รหัสนักศึกษา *</label>
           <input
             type="text"
             placeholder="เช่น 660001"
             value={studentId}
             onChange={(e) => setStudentId(e.target.value)}
-            style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #ccc", boxSizing: "border-box" }}
+            style={inputStyle}
           />
         </div>
 
         <div>
-          <label style={{ display: "block", fontWeight: "bold", marginBottom: "6px" }}>ชื่อ - สกุล *</label>
+          <label style={labelStyle}>ชื่อ - สกุล *</label>
           <input
             type="text"
             placeholder="เช่น นายสมชาย ใจดี"
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
-            style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #ccc", boxSizing: "border-box" }}
+            style={inputStyle}
           />
         </div>
 
-        <div>
-          <label style={{ display: "block", fontWeight: "bold", marginBottom: "6px" }}>อีเมล *</label>
-          <input
-            type="email"
-            placeholder="เช่น student@mail.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ width: "100%", padding: "10px", borderRadius: "8px", border: "1px solid #ccc", boxSizing: "border-box" }}
-          />
-        </div>
-
-        <div style={{ display: "flex", gap: "12px", marginTop: "10px" }}>
-          <button type="submit" style={{ background: "#4285f4", color: "#fff", padding: "12px 20px", border: "none", borderRadius: "8px", fontWeight: "bold", cursor: "pointer" }}>
+                <div style={{ display: "flex", gap: "12px", marginTop: "10px" }}>
+          <button
+            type="submit"
+            style={{ background: "#4285f4", color: "#fff", padding: "12px 20px", border: "none", borderRadius: "8px", fontWeight: "bold", cursor: "pointer" }}
+          >
             ยืนยันการลงทะเบียน
           </button>
-          <Link to="/activities" style={{ background: "#5f6368", color: "#fff", padding: "12px 20px", borderRadius: "8px", textDecoration: "none", fontWeight: "bold", textAlign: "center" }}>
+          <Link
+            to="/activities"
+            style={{ background: "#5f6368", color: "#fff", padding: "12px 20px", borderRadius: "8px", textDecoration: "none", fontWeight: "bold", textAlign: "center" }}
+          >
             ยกเลิก
           </Link>
         </div>
