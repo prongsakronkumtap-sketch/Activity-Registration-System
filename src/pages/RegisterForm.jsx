@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { getActivityById } from "../services/api";
 import StatusMessage from "../components/StatusMessage";
-import { getActivityById } from "../services/api";
-import StatusMessage from "../components/StatusMessage";
 
 function RegisterForm() {
   const { id } = useParams();
@@ -87,7 +85,7 @@ function RegisterForm() {
           <label style={labelStyle}>รหัสนักศึกษา *</label>
           <input
             type="text"
-            placeholder="เช่น 660001"
+            placeholder="660001"
             value={studentId}
             onChange={(e) => setStudentId(e.target.value)}
             style={inputStyle}
@@ -98,14 +96,25 @@ function RegisterForm() {
           <label style={labelStyle}>ชื่อ - สกุล *</label>
           <input
             type="text"
-            placeholder="เช่น นายสมชาย ใจดี"
+            placeholder="ชื่อ-นาสกุล"
             value={studentName}
             onChange={(e) => setStudentName(e.target.value)}
             style={inputStyle}
           />
         </div>
 
-                <div style={{ display: "flex", gap: "12px", marginTop: "10px" }}>
+        <div>
+          <label style={labelStyle}>อีเมล *</label>
+          <input
+            type="email"
+            placeholder="example@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={inputStyle}
+          />
+        </div>
+
+        <div style={{ display: "flex", gap: "12px", marginTop: "10px" }}>
           <button
             type="submit"
             style={{ background: "#4285f4", color: "#fff", padding: "12px 20px", border: "none", borderRadius: "8px", fontWeight: "bold", cursor: "pointer" }}
